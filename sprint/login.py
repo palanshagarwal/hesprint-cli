@@ -4,7 +4,7 @@ import json
 from utils import log
 import getpass
 
-def login():
+def login(**kwargs):
     from constants import API_DOMAIN_ROOT
     from constants import CONFIG_PATH
     from constants import SPRINT_PATH

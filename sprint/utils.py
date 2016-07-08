@@ -21,4 +21,4 @@ def apply_auth_creds(ctx):
         with open(CRED_FILE_PATH, 'r') as fp:
             data = json.load(fp)
         ctx.update(data)
-        return data
+        return ctx
