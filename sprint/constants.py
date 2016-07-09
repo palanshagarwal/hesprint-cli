@@ -35,6 +35,10 @@ SLUG_FILE_NAME = 'slug.json'
 
 SLUG_FILE_PATH = SPRINT_PATH + '/' +SLUG_FILE_NAME
 
+TEAM_FILE_NAME = 'team.json'
+
+TEAM_FILE_PATH = SPRINT_PATH + '/' +TEAM_FILE_NAME
+
 COMMAND_MAP = {
         'login' : login,
         'register': register,

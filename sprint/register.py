@@ -2,31 +2,19 @@ import requests
 import os, json
 from tabulate import tabulate
 from utils import log, apply_auth_creds
-from utils import save_slug
-
-def process_action(url, sprint_slug):
-    from constants import API_DOMAIN_ROOT
-
-    if not sprint_slug:
-        msg = '{color}Please enter a sprint slug {default_color}'
-        msg_ctx = {'color': VERBOSE_COLOR_MAP[VerbosityLevel.ERROR]}
-        log(msg, msg_ctx)
-        return
-
-    url = url.format(sprint_slug=sprint_slug)
-    url = API_DOMAIN_ROOT + url
-    data = {}
-    data = apply_auth_creds(data)
-    resp = requests.post(url, data=json.dumps(data))
-    return resp
-
+from utils import save_slug, get_slug
+from utils import process_action
 
 def register(**kwargs):
     from constants import VERBOSE_COLOR_MAP
     from constants import VerbosityLevel
     from team import handle_team_reg
 
-    sprint_slug = kwargs['subcommand']
+    data = get_slug()
+    if data:
+        sprint_slug = data['sprint_slug']
+    else:
+        return
     url = '{sprint_slug}' +  '/register/'
     resp = process_action(url, sprint_slug)
 
@@ -34,14 +22,14 @@ def register(**kwargs):
         r_json = resp.json()
         is_team = r_json['team']
         if not is_team:
-            while True:
-                handle_team_reg()
+            handle_team_reg()
         else:
             msg = '{color}' + r_json['message'] + '{default_color}'
             msg_ctx = {'color':
                     VERBOSE_COLOR_MAP[r_json['verbosity_level']]}
             log(msg, msg_ctx)
     else:
+        r_json = resp.json()
         msg = '{color}' + r_json['emessage'] + '{default_color}'
         msg_ctx = {'color': VERBOSE_COLOR_MAP[VerbosityLevel.ERROR]}
         log(msg, msg_ctx)
