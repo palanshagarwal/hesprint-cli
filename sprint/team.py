@@ -7,6 +7,8 @@ from utils import get_slug, process_action
 def create_team():
     from constants import VERBOSE_COLOR_MAP
     from constants import VerbosityLevel
+    from constants import FILE_DELIMETER
+    from constants import TEAM_FILE_PATH
 
     data = get_slug()
     if data:
@@ -14,7 +16,7 @@ def create_team():
     else:
         return
 
-    url = '{sprint_slug}' +  '/team/themes/'
+    url = '{sprint_slug}' +  '/themes/'
     resp = process_action(url, sprint_slug)
 
     if resp.status_code == 200:
@@ -22,10 +24,30 @@ def create_team():
         data = {
             'team_handle': '',
             'synopsis': '',
-            'theme_choice': ','
+            'theme_choice': '',
         }
-        j_data = json.dumps(data)
-        
+        j_data = json.dumps(data, indent=6)
+        j_data += '\n'
+        j_data += FILE_DELIMETER
+        j_data += '\nPlease chose a theme from below:\n'
+
+        master = []
+        count = 1
+        for k in r_json:
+            master.append(str(count)+'. '+r_json[str(count)])
+            count += 1
+        theme_choice_data = '\n'.join(k for k in master)
+        j_data += theme_choice_data + '\n'
+
+        with open(TEAM_FILE_PATH, 'wb') as fp:
+            fp.write(j_data)
+
+        os.system('vi '+TEAM_FILE_PATH)
+        with open(TEAM_FILE_PATH, 'r') as fp:
+            data = fp.read()
+
+        post_data = json.loads(data.split(FILE_DELIMETER)[0].strip())
+
         
     else:
         r_json = resp.json()

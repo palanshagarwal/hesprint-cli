@@ -61,3 +61,5 @@ VERBOSE_COLOR_MAP = {
     VerbosityLevel.BOLD: BColors.BOLD,
     VerbosityLevel.OKBLUE: BColors.OKBLUE,
 }
+
+FILE_DELIMETER = 50*'--'
