@@ -1,5 +1,6 @@
 from login import login
 from register import register
+from register import access
 from os.path import expanduser
 
 class BColors():
@@ -28,15 +29,16 @@ SPRINT_PATH = CONFIG_PATH + '/' + HESPRINT_DIR
 
 CRED_FILE_NAME = 'credentials.json'
 
-CRED_FILE_PATH = SPRINT_PATH + CRED_FILE_NAME
+CRED_FILE_PATH = SPRINT_PATH +  '/' + CRED_FILE_NAME
 
 SLUG_FILE_NAME = 'slug.json'
 
-SLUG_FILE_PATH = SPRINT_PATH + SLUG_FILE_NAME
+SLUG_FILE_PATH = SPRINT_PATH + '/' +SLUG_FILE_NAME
 
 COMMAND_MAP = {
         'login' : login,
         'register': register,
+        'access': access,
     }
 
 class VerbosityLevel:
@@ -44,10 +46,14 @@ class VerbosityLevel:
     WARNING = 200
     INFO = 300
     SUCCESS = 400
+    BOLD = 500
+    OKBLUE = 600
 
 VERBOSE_COLOR_MAP = {
     VerbosityLevel.ERROR: BColors.FAIL,
     VerbosityLevel.WARNING: BColors.WARNING,
     VerbosityLevel.INFO: BColors.DEFAULT,
     VerbosityLevel.SUCCESS: BColors.OKGREEN,
+    VerbosityLevel.BOLD: BColors.BOLD,
+    VerbosityLevel.OKBLUE: BColors.OKBLUE,
 }

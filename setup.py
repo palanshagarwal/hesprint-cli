@@ -15,7 +15,8 @@ entry_points = {
 install_requires = [
         'argparse==1.2.1',
         'requests==2.10.0',
-        'wsgiref==0.1.2'
+        'wsgiref==0.1.2',
+        'tabulate==0.7.5'
 ]
 
 tests_require = [
